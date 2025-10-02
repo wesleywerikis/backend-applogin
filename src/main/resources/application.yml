@@ -1,0 +1,16 @@
+server:
+  port: 8080
+
+
+app:
+  jwt:
+    secret: your_jwt_secret_key
+    expiration-minutes: 120
+
+spring:
+  web:
+    cors:
+      allowed-origins: "http://localhost:5500, http://127.0.0.1:5500"
+      allowed-methods: "GET, POST, PUT, DELETE, OPTIONS"
+      allowed-headers: "*"
+      allow-credentials: false
