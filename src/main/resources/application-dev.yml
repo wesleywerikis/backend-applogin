@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:enterprise_auth;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false
+    username: sa
+    password: sa
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate.ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate.format_sql: true
+      hibernate.show_sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  flyway:
+    enabled: true
