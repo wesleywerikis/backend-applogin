@@ -2,43 +2,47 @@ package br.com.applogin.backend_applogin.service.impl;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
-import br.com.applogin.backend_applogin.domain.entity.Role;
 import br.com.applogin.backend_applogin.domain.entity.User;
+import br.com.applogin.backend_applogin.domain.repository.RoleRepository;
 import br.com.applogin.backend_applogin.domain.repository.UserRepository;
 import br.com.applogin.backend_applogin.service.UserService;
-import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
+@Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository users;
-    private final EntityManager em;
+    private final RoleRepository roles;
     private final PasswordEncoder encoder;
 
     @Override
-    public User register(String username, String email, String rawPassword, Set<String> roles) {
+    @Transactional
+    public User register(String username, String email, String rawPassword, Set<String> rolesName) {
         if (users.existsByUsername(username))
             throw new IllegalArgumentException("Username already taken");
         if (users.existsByEmail(email))
             throw new IllegalArgumentException("Email already registered");
+
+        var roleEntities = rolesName.stream()
+                .map(rn -> roles.findByName(rn)
+                        .orElseThrow(() -> new IllegalArgumentException("Role not found: " + rn)))
+                .collect(Collectors.toSet());
 
         var user = User.builder()
                 .username(username)
                 .email(email)
                 .passwordHash(encoder.encode(rawPassword))
                 .enabled(true)
+                .roles(roleEntities)
                 .build();
 
-        var roleEntities = roles.stream()
-                .map(rn -> em.createQuery(
-                        "SELECT r FROM Role r WHERE r.name = :n", Role.class)
-                        .setParameter("n", rn).getResultStream().findFirst()
-                        .orElseThrow(() -> new IllegalArgumentException("Role not found: " + rn)))
-                .collect(java.util.stream.Collectors.toSet());
-
-        user.setRoles(roleEntities);
         return users.save(user);
     }
 
