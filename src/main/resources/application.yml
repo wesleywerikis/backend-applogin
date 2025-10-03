@@ -9,7 +9,7 @@ spring:
 
 app:
   jwt:
-    secret: ""
+    secret: "x+IGkB92B98mKxe0QIi8+6eSQrjoGvvtjgHgt0SrIV+c+PbL+FpWd5jhNQv2ZJ6qhpJLA57SRkeHhdjs1koNHg=="
     expiration-minutes: 120
 
 ---
