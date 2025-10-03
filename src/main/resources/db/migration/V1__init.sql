@@ -24,4 +24,3 @@ CREATE TABLE users_roles (
 -- Seed básico
 INSERT INTO roles(name) VALUES ('USER'), ('ADMIN');
 
--- Usuário admin padrão: senha será aplicada pelo Service ao registrar; aqui criamos só se quiser mock
