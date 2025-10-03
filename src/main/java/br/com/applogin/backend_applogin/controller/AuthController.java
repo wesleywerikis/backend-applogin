@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.applogin.backend_applogin.auth.JwtUtil;
 import br.com.applogin.backend_applogin.domain.entity.User;
 import br.com.applogin.backend_applogin.dto.AuthLoginRequest;
-import br.com.applogin.backend_applogin.dto.AuthRegusterRequest;
+import br.com.applogin.backend_applogin.dto.AuthRegisterRequest;
 import br.com.applogin.backend_applogin.mapper.UserMapper;
 import br.com.applogin.backend_applogin.service.UserService;
 import jakarta.validation.Valid;
@@ -29,7 +29,7 @@ public class AuthController {
     private final UserMapper mapper;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody @Valid AuthRegusterRequest req) {
+    public ResponseEntity<?> register(@RequestBody @Valid AuthRegisterRequest req) {
         User u = users.register(req.username(), req.email(), req.password(), Set.of("USER"));
         return ResponseEntity.ok(mapper.toResponse(u));
     }
