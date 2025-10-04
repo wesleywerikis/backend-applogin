@@ -1,4 +1,4 @@
-# backend-applogin
+# app-login-springboot-jwt
 
 🔒 **API de autenticação** com **Spring Boot 3 (Java 17)**, **JWT**, **JPA**, **Flyway** e perfis para **H2 (dev)** e **MariaDB (prod)**.  
 Inclui **cadastro** e **login**, DTOs validados, mapeamento com **MapStruct**, hashing de senha com **BCrypt** e um endpoint protegido `/api/users/me`.
